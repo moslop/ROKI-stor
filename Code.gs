@@ -22,29 +22,40 @@ function doPost(e) {
 
 function handleRequest(e) {
   try {
-    let action = e.parameter.action;
-    let data = null;
+    let action = null;
+    let data = {};
 
-    if (e.postData && e.postData.contents) {
+    if (e && e.parameter && e.parameter.action) {
+      action = e.parameter.action;
+    }
+
+    if (e && e.postData && e.postData.contents) {
       try {
         const payload = JSON.parse(e.postData.contents);
         action = payload.action || action;
         data = payload;
       } catch (err) {
-        // Not JSON or other parse error
+        console.error('Error parsing JSON:', err);
+        // We don't throw here to allow fallback to e.parameter if possible
       }
     }
+
+    if (!action) throw new Error('لم يتم تحديد إجراء');
 
     if (action === 'getProducts') {
       return getProducts();
     } else if (action === 'saveProduct') {
+      if (!data.product) throw new Error('بيانات المنتج مفقودة');
       return saveProduct(data.product);
     } else if (action === 'deleteProduct') {
-      return deleteProduct(data.id);
+      const id = data.id || (e.parameter ? e.parameter.id : null);
+      if (!id) throw new Error('معرف المنتج مفقود');
+      return deleteProduct(id);
     } else {
-      return jsonResponse({ status: 'error', message: 'Invalid action: ' + action });
+      throw new Error('إجراء غير معروف: ' + action);
     }
   } catch (err) {
+    console.error('Final handleRequest error:', err.toString());
     return jsonResponse({ status: 'error', message: err.toString() });
   }
 }

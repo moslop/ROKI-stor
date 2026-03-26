@@ -6,18 +6,27 @@ const CODE = 'CNSy7zbs';
 // ── API CALLER (Robust & No Content-Type for CORS) ──
 async function callAPI(data) {
   try {
-    console.log('API Request:', data.action, data);
+    console.log('API Request:', data.action);
     const response = await fetch(API, {
       method: 'POST',
       body: JSON.stringify(data)
     });
-    const result = await response.json();
-    console.log('API Response:', result);
-    return result;
+    if (!response.ok) {
+      console.error('Server error status:', response.status);
+      return { status: 'error', message: 'خطأ في الخادم: ' + response.status };
+    }
+    const text = await response.text();
+    console.log('API Raw Response (trimmed):', text.slice(0, 100) + (text.length > 100 ? '...' : ''));
+    try {
+      const result = JSON.parse(text);
+      return result;
+    } catch (parseErr) {
+      console.error('API JSON Parse Error:', parseErr, text);
+      return { status: 'error', message: 'استجابة غير صالحة من الخادم' };
+    }
   } catch (err) {
-    console.error('API Error:', err);
-    toast('خطأ في الاتصال بالخادم', 'er');
-    return { status: 'error', message: err.toString() };
+    console.error('API Fetch Error:', err);
+    return { status: 'error', message: 'خطأ في الاتصال بالشبكة' };
   }
 }
 
@@ -231,15 +240,42 @@ function toggleImgSrc(src) {
   }
 }
 
-function handleUp(el) {
+async function handleUp(el) {
   const f = el.files[0]; if (!f) return;
+
   const r = new FileReader();
-  r.onload = function(e) {
-    selectedGalleryImg = e.target.result;
-    document.getElementById('upImg').src = selectedGalleryImg;
-    document.getElementById('upPrev').style.display = 'block';
+  r.onload = async function(e) {
+    const rawImg = e.target.result;
+    try {
+      const compressed = await compressImg(rawImg, 800, 0.7);
+      selectedGalleryImg = compressed;
+      document.getElementById('upImg').src = selectedGalleryImg;
+      document.getElementById('upPrev').style.display = 'block';
+    } catch (err) {
+      console.error('Compression error:', err);
+      selectedGalleryImg = rawImg; // Fallback
+      document.getElementById('upImg').src = selectedGalleryImg;
+      document.getElementById('upPrev').style.display = 'block';
+    }
   };
   r.readAsDataURL(f);
+}
+
+function compressImg(base64, maxW, quality) {
+  return new Promise((resolve, reject) => {
+    const img = new Image();
+    img.src = base64;
+    img.onload = () => {
+      const canvas = document.createElement('canvas');
+      let w = img.width, h = img.height;
+      if (w > maxW) { h = (maxW / w) * h; w = maxW; }
+      canvas.width = w; canvas.height = h;
+      const ctx = canvas.getContext('2d');
+      ctx.drawImage(img, 0, 0, w, h);
+      resolve(canvas.toDataURL('image/jpeg', quality));
+    };
+    img.onerror = reject;
+  });
 }
 
 function clearFm() {
@@ -314,25 +350,43 @@ async function saveProd() {
   const qty = document.getElementById('fQt').value;
   const img = selectedGalleryImg;
   if (!name || !price || !qty || !img) { toast(t('fill_fields'), 'er'); return; }
+
   const eid = document.getElementById('eid').value;
   const prod = {
-    id: eid || String(Date.now()), name, price: +price, oldPrice: +document.getElementById('fOp').value || 0, qty: +qty, img,
-    cat: document.getElementById('fCt').value, badge: document.getElementById('fBg').value,
-    desc: document.getElementById('fDe').value.trim(), sizes: document.getElementById('fSz').value.trim() || 'XS,S,M,L,XL,XXL'
+    id: eid || String(Date.now()),
+    name,
+    price: +price,
+    oldPrice: +document.getElementById('fOp').value || 0,
+    qty: +qty,
+    img,
+    cat: document.getElementById('fCt').value,
+    badge: document.getElementById('fBg').value,
+    desc: document.getElementById('fDe').value.trim(),
+    sizes: document.getElementById('fSz').value.trim() || 'XS,S,M,L,XL,XXL'
   };
 
-  const btn = document.querySelector('#aFm .br');
-  btn.disabled = true; btn.textContent = 'جاري الحفظ...';
+  const btn = document.getElementById('svBtn');
+  btn.disabled = true;
+  const oldTxt = btn.textContent;
+  btn.textContent = 'جاري الحفظ...';
 
-  const res = await callAPI({ action: 'saveProduct', product: prod });
-  if (res.status === 'success') {
-    toast(t('saved'), 'ok');
-    await syncP();
-    setTimeout(() => { adminTab('products'); }, 1500);
-  } else {
-    toast('فشل الحفظ: ' + res.message, 'er');
+  try {
+    const res = await callAPI({ action: 'saveProduct', product: prod });
+    if (res && res.status === 'success') {
+      toast(t('saved'), 'ok');
+      await syncP();
+      setTimeout(() => adminTab('products'), 1500);
+    } else {
+      console.error('Save failed:', res);
+      toast('فشل الحفظ: ' + (res?.message || 'خطأ مجهول'), 'er');
+    }
+  } catch (err) {
+    console.error('Save exception:', err);
+    toast('حدث خطأ أثناء الحفظ', 'er');
+  } finally {
+    btn.disabled = false;
+    btn.textContent = oldTxt;
   }
-  btn.disabled = false; btn.textContent = t('save');
 }
 
 async function delP(id) {
