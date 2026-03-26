@@ -25,6 +25,7 @@ function handleRequest(e) {
     let action = null;
     let data = {};
 
+    // Prioritize query param for action, helps routing
     if (e && e.parameter && e.parameter.action) {
       action = e.parameter.action;
     }
@@ -32,15 +33,16 @@ function handleRequest(e) {
     if (e && e.postData && e.postData.contents) {
       try {
         const payload = JSON.parse(e.postData.contents);
-        action = payload.action || action;
+        // Keep the payload data, but query param action wins
+        action = action || payload.action;
         data = payload;
       } catch (err) {
-        console.error('Error parsing JSON:', err);
-        // We don't throw here to allow fallback to e.parameter if possible
+        console.error('Error parsing JSON body:', err);
+        // If query param action exists, we can still proceed
       }
     }
 
-    if (!action) throw new Error('لم يتم تحديد إجراء');
+    if (!action) throw new Error('لم يتم تحديد إجراء (Action is missing)');
 
     if (action === 'getProducts') {
       return getProducts();

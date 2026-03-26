@@ -6,26 +6,26 @@ const CODE = 'CNSy7zbs';
 // ── API CALLER (Robust & No Content-Type for CORS) ──
 async function callAPI(data) {
   try {
-    console.log('API Request:', data.action);
-    const response = await fetch(API, {
+    log('API Request:', data.action);
+    const url = `${API}?action=${data.action}`;
+    const response = await fetch(url, {
       method: 'POST',
       body: JSON.stringify(data)
     });
     if (!response.ok) {
-      console.error('Server error status:', response.status);
+      log('Server error status:', response.status);
       return { status: 'error', message: 'خطأ في الخادم: ' + response.status };
     }
     const text = await response.text();
-    console.log('API Raw Response (trimmed):', text.slice(0, 100) + (text.length > 100 ? '...' : ''));
+    log('API Raw Response (trimmed):', text.slice(0, 100) + (text.length > 100 ? '...' : ''));
     try {
-      const result = JSON.parse(text);
-      return result;
+      return JSON.parse(text);
     } catch (parseErr) {
-      console.error('API JSON Parse Error:', parseErr, text);
+      log('API JSON Parse Error:', parseErr, text);
       return { status: 'error', message: 'استجابة غير صالحة من الخادم' };
     }
   } catch (err) {
-    console.error('API Fetch Error:', err);
+    log('API Fetch Error:', err);
     return { status: 'error', message: 'خطأ في الاتصال بالشبكة' };
   }
 }
@@ -353,16 +353,16 @@ async function saveProd() {
 
   const eid = document.getElementById('eid').value;
   const prod = {
-    id: eid || String(Date.now()),
-    name,
-    price: +price,
-    oldPrice: +document.getElementById('fOp').value || 0,
-    qty: +qty,
-    img,
-    cat: document.getElementById('fCt').value,
-    badge: document.getElementById('fBg').value,
-    desc: document.getElementById('fDe').value.trim(),
-    sizes: document.getElementById('fSz').value.trim() || 'XS,S,M,L,XL,XXL'
+    id: eid ? String(eid) : "P-" + Date.now(),
+    name: String(name),
+    price: Number(price),
+    oldPrice: Number(document.getElementById('fOp').value) || 0,
+    qty: Number(qty),
+    img: String(img),
+    cat: String(document.getElementById('fCt').value),
+    badge: String(document.getElementById('fBg').value || ""),
+    desc: String(document.getElementById('fDe').value.trim()),
+    sizes: String(document.getElementById('fSz').value.trim() || 'XS,S,M,L,XL,XXL')
   };
 
   const btn = document.getElementById('svBtn');
@@ -465,7 +465,23 @@ function go(pg) {
 }
 
 // ── TOAST ──
-function toast(msg, type = '') { const el = document.getElementById('toast'); el.textContent = msg; el.className = 'toast' + (type ? ' ' + type : ''); el.classList.add('show'); setTimeout(() => el.classList.remove('show'), 3000); }
+function toast(msg, type = '') {
+  const el = document.getElementById('toast');
+  if(!el) return;
+  el.textContent = msg;
+  el.className = 'toast' + (type ? ' ' + type : '');
+  el.classList.add('show');
+  setTimeout(() => el.classList.remove('show'), 4000);
+}
+
+// ── DEBUG LOGGING ──
+window.LUXE_DEBUG = true;
+function log(...args) { if(window.LUXE_DEBUG) console.log('[LUXE]', ...args); }
 
 // ── INIT ──
-loadProds(); applyLang(); updCart();
+window.onload = () => {
+  log('Initializing application...');
+  loadProds();
+  applyLang();
+  updCart();
+};
