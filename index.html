@@ -173,8 +173,26 @@
           <div class="fg"><label data-k="f_qty">الكمية *</label><input id="fQt" type="number"></div>
           <div class="fg"><label data-k="f_badge">الشارة</label><select id="fBg"><option value="">بدون</option><option value="جديد">جديد</option><option value="تخفيض">تخفيض</option><option value="حصري">حصري</option></select></div>
           <div class="fg s2">
-            <label data-k="f_img">اختر الصورة من المعرض *</label>
-            <div id="prodGallery" style="display:flex; gap:5px; flex-wrap:wrap; margin-top:5px;"></div>
+            <label data-k="f_img_source">مصدر الصورة *</label>
+            <div style="display:flex; gap:1.5rem; margin-bottom:0.5rem;">
+              <label style="display:flex; align-items:center; gap:5px; cursor:pointer;">
+                <input type="radio" name="imgSource" value="gallery" checked onclick="toggleImgSrc('gallery')"> <span data-k="from_gallery">من المعرض</span>
+              </label>
+              <label style="display:flex; align-items:center; gap:5px; cursor:pointer;">
+                <input type="radio" name="imgSource" value="upload" onclick="toggleImgSrc('upload')"> <span data-k="upload_device">رفع من الجهاز</span>
+              </label>
+            </div>
+
+            <div id="galleryWrap">
+              <div id="prodGallery" style="display:flex; gap:5px; flex-wrap:wrap; margin-top:5px;"></div>
+            </div>
+
+            <div id="uploadWrap" style="display:none;">
+              <input type="file" id="fUp" accept="image/*" onchange="handleUp(this)" style="padding:8px; border:1px dashed var(--border); border-radius:11px; width:100%;">
+              <div id="upPrev" style="margin-top:10px; display:none;">
+                <img id="upImg" src="" style="width:80px; height:100px; object-fit:cover; border-radius:11px; border:2px solid var(--red);">
+              </div>
+            </div>
           </div>
           <div class="fg s2"><label data-k="f_desc">الوصف</label><textarea id="fDe"></textarea></div>
           <div class="fg s2"><label data-k="f_sizes">المقاسات (بفاصلة)</label><input id="fSz" type="text" value="XS,S,M,L,XL,XXL"></div>

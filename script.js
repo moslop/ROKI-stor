@@ -218,15 +218,43 @@ function adminTab(tab) {
   if (tab === 'home_imgs') renderAdmHomeImgs();
 }
 
+function toggleImgSrc(src) {
+  document.getElementById('galleryWrap').style.display = src === 'gallery' ? 'block' : 'none';
+  document.getElementById('uploadWrap').style.display = src === 'upload' ? 'block' : 'none';
+  if(src === 'gallery') {
+    document.getElementById('upPrev').style.display = 'none';
+  } else {
+    if(selectedGalleryImg.startsWith('data:image')) {
+      document.getElementById('upImg').src = selectedGalleryImg;
+      document.getElementById('upPrev').style.display = 'block';
+    }
+  }
+}
+
+function handleUp(el) {
+  const f = el.files[0]; if (!f) return;
+  const r = new FileReader();
+  r.onload = function(e) {
+    selectedGalleryImg = e.target.result;
+    document.getElementById('upImg').src = selectedGalleryImg;
+    document.getElementById('upPrev').style.display = 'block';
+  };
+  r.readAsDataURL(f);
+}
+
 function clearFm() {
   document.getElementById('eid').value = '';
-  ['fNm', 'fNe', 'fNf', 'fDe', 'fDn', 'fDf', 'fOp'].forEach(id => document.getElementById(id).value = '');
+  ['fNm', 'fNe', 'fNf', 'fDe', 'fDn', 'fDf', 'fOp'].forEach(id => { const el = document.getElementById(id); if(el) el.value = ''; });
   document.getElementById('fPr').value = ''; document.getElementById('fQt').value = '';
   document.getElementById('fSz').value = 'XS,S,M,L,XL,XXL';
   document.getElementById('fBg').value = ''; document.getElementById('fCt').value = 'رجالي';
   document.getElementById('fmTit').textContent = t('add_prod_title');
   selectedGalleryImg = '';
   renderGallerySelector('prodGallery');
+  document.querySelectorAll('input[name="imgSource"]').forEach(i => i.checked = (i.value === 'gallery'));
+  toggleImgSrc('gallery');
+  document.getElementById('fUp').value = '';
+  document.getElementById('upPrev').style.display = 'none';
 }
 
 function renderGallerySelector(targetId, currentImg = '') {
@@ -266,8 +294,18 @@ function editP(id) {
   document.getElementById('fDe').value = p.desc || '';
   document.getElementById('fSz').value = p.sizes || 'XS,S,M,L,XL,XXL';
   document.getElementById('fmTit').textContent = '✏️ تعديل: ' + p.name;
-  selectedGalleryImg = p.img;
-  renderGallerySelector('prodGallery', p.img);
+  selectedGalleryImg = p.img || '';
+
+  const isUpload = selectedGalleryImg.startsWith('data:image');
+  document.querySelectorAll('input[name="imgSource"]').forEach(i => i.checked = (i.value === (isUpload ? 'upload' : 'gallery')));
+  toggleImgSrc(isUpload ? 'upload' : 'gallery');
+
+  if (isUpload) {
+    document.getElementById('upImg').src = selectedGalleryImg;
+    document.getElementById('upPrev').style.display = 'block';
+  } else {
+    renderGallerySelector('prodGallery', p.img);
+  }
 }
 
 async function saveProd() {
@@ -335,10 +373,10 @@ function saveHomeImgs() {
 const LS = ['ar', 'en']; let curL = 'ar';
 const TX = {
   ar: {
-    home: 'الرئيسية', collections: 'المجموعات', about: 'من نحن', order: 'اطلب', admin: 'المسؤول', cart: 'السلة', new_arrivals: '✦ وصل حديثاً 2025', hero1: 'امتلك الأسلوب', hero2: 'أحكم الجرأة', hero_sub: 'أزياء مختلطة بروح عصرية جريئة — رجالي، أطفال. اكتشف الكولكشن الحصري.', shop_now: 'تسوق الآن →', our_story: 'قصتنا', s1: 'كولكشن', s2: 'عميل', s3: 'منتج', featured: 'مميز', top: 'أبرز', colls: 'المجموعات', all: 'الكل', men: 'رجالي', kids: 'أطفال', loading: 'جاري التحميل...', all_coll: 'كل المجموعات', discover: 'اكتشف', style: 'أسلوبك', coll_sub: 'أكثر من 15 تشكيلة متنوعة', about_tag: 'من نحن', about_h1: 'قصة', about_sub: 'شغف بالموضة، التزام بالجودة', our_story2: 'قصتنا', ab1: 'بدأت رحلتنا من شغف حقيقي — الإيمان بأن كل شخص يستحق أن يرتدي ما يجعله يشعر بالثقة والجرأة.', ab2: 'نقدم تشكيلة مختارة بعناية من الملابس المختلطة للرجال، والأطفال.', ab3: 'كل قطعة نختارها تحكي قصة — قصة أسلوب حياة.', v1: 'جودة مضمونة', v1d: 'نختار كل قطعة بمعايير صارمة', v2: 'أسعار عادلة', v2d: 'أفضل سعر دون تنازل', v3: 'توصيل سريع', v3d: 'نصلك في أسرع وقت', v4: 'خدمة واتساب', v4d: 'متاحون لك دائماً', order_title: 'اطلب الآن', order_sub: 'أكمل بياناتك — الطلب يصلك عبر واتساب', your_cart: '🛒 سلتك', f_name: 'الاسم *', f_phone: 'الهاتف *', f_addr: 'العنوان *', f_prod: 'المنتج', f_size: 'المقاس', f_notes: 'ملاحظات', sel_prod: '-- اختر --', send_wa: 'إرسال عبر واتساب', admin_title: 'لوحة التحكم', admin_sub: 'أدخل كود الدخول', wrong_code: '❌ كود خاطئ', enter: 'دخول', dashboard: 'لوحة التحكم', add_prod: '+ منتج جديد', refresh: '🔄 تحديث', logout: 'خروج', total_prods: 'إجمالي المنتجات', total_ords: 'إجمالي الطلبات', total_rev: 'المبيعات (دج)', products: 'المنتجات', orders_tab: 'الطلبات', add_tab: 'إضافة / تعديل', add_prod_title: 'إضافة منتج جديد', f_cat: 'الفئة', f_price: 'السعر (دج) *', f_oldp: 'السعر القديم', f_qty: 'الكمية *', f_badge: 'الشارة', f_img: 'اختر الصورة من المعرض *', f_desc: 'الوصف (عربي)', f_sizes: 'المقاسات (بفاصلة)', save: 'حفظ المنتج', cancel: 'إلغاء', cart_title: '🛒 السلة', empty_cart: 'السلة فارغة', total: 'المجموع', order_now: '📱 اطلب الآن', pick_size: 'اختر المقاس:', add_cart: 'إضافة للسلة 🛒', ft_desc: 'متجرك للأزياء المختلطة — رجالي، أطفال.', ft_links: 'روابط', ft_contact: 'تواصل', rights: '© 2025 LUXE FASHION — جميع الحقوق محفوظة', added: '✅ أُضيف للسلة!', order_sent: '✅ جاري فتح واتساب...', saved: '✅ تم الحفظ!', deleted: '🗑 تم الحذف', fill_fields: '⚠️ أكمل الحقول المطلوبة'
+    home: 'الرئيسية', collections: 'المجموعات', about: 'من نحن', order: 'اطلب', admin: 'المسؤول', cart: 'السلة', new_arrivals: '✦ وصل حديثاً 2025', hero1: 'امتلك الأسلوب', hero2: 'أحكم الجرأة', hero_sub: 'أزياء مختلطة بروح عصرية جريئة — رجالي، أطفال. اكتشف الكولكشن الحصري.', shop_now: 'تسوق الآن →', our_story: 'قصتنا', s1: 'كولكشن', s2: 'عميل', s3: 'منتج', featured: 'مميز', top: 'أبرز', colls: 'المجموعات', all: 'الكل', men: 'رجالي', kids: 'أطفال', loading: 'جاري التحميل...', all_coll: 'كل المجموعات', discover: 'اكتشف', style: 'أسلوبك', coll_sub: 'أكثر من 15 تشكيلة متنوعة', about_tag: 'من نحن', about_h1: 'قصة', about_sub: 'شغف بالموضة، التزام بالجودة', our_story2: 'قصتنا', ab1: 'بدأت رحلتنا من شغف حقيقي — الإيمان بأن كل شخص يستحق أن يرتدي ما يجعله يشعر بالثقة والجرأة.', ab2: 'نقدم تشكيلة مختارة بعناية من الملابس المختلطة للرجال، والأطفال.', ab3: 'كل قطعة نختارها تحكي قصة — قصة أسلوب حياة.', v1: 'جودة مضمونة', v1d: 'نختار كل قطعة بمعايير صارمة', v2: 'أسعار عادلة', v2d: 'أفضل سعر دون تنازل', v3: 'توصيل سريع', v3d: 'نصلك في أسرع وقت', v4: 'خدمة واتساب', v4d: 'متاحون لك دائماً', order_title: 'اطلب الآن', order_sub: 'أكمل بياناتك — الطلب يصلك عبر واتساب', your_cart: '🛒 سلتك', f_name: 'الاسم *', f_phone: 'الهاتف *', f_addr: 'العنوان *', f_prod: 'المنتج', f_size: 'المقاس', f_notes: 'ملاحظات', sel_prod: '-- اختر --', send_wa: 'إرسال عبر واتساب', admin_title: 'لوحة التحكم', admin_sub: 'أدخل كود الدخول', wrong_code: '❌ كود خاطئ', enter: 'دخول', dashboard: 'لوحة التحكم', add_prod: '+ منتج جديد', refresh: '🔄 تحديث', logout: 'خروج', total_prods: 'إجمالي المنتجات', total_ords: 'إجمالي الطلبات', total_rev: 'المبيعات (دج)', products: 'المنتجات', orders_tab: 'الطلبات', add_tab: 'إضافة / تعديل', add_prod_title: 'إضافة منتج جديد', f_cat: 'الفئة', f_price: 'السعر (دج) *', f_oldp: 'السعر القديم', f_qty: 'الكمية *', f_badge: 'الشارة', f_img: 'اختر الصورة من المعرض *', f_desc: 'الوصف (عربي)', f_sizes: 'المقاسات (بفاصلة)', save: 'حفظ المنتج', cancel: 'إلغاء', cart_title: '🛒 السلة', empty_cart: 'السلة فارغة', total: 'المجموع', order_now: '📱 اطلب الآن', pick_size: 'اختر المقاس:', add_cart: 'إضافة للسلة 🛒', ft_desc: 'متجرك للأزياء المختلطة — رجالي، أطفال.', ft_links: 'روابط', ft_contact: 'تواصل', rights: '© 2025 LUXE FASHION — جميع الحقوق محفوظة', added: '✅ أُضيف للسلة!', order_sent: '✅ جاري فتح واتساب...', saved: '✅ تم الحفظ!', deleted: '🗑 تم الحذف', fill_fields: '⚠️ أكمل الحقول المطلوبة', f_img_source: 'مصدر الصورة *', from_gallery: 'من المعرض', upload_device: 'رفع من الجهاز'
   },
   en: {
-    home: 'Home', collections: 'Collections', about: 'About', order: 'Order', admin: 'Admin', cart: 'Cart', new_arrivals: '✦ New Arrivals 2025', hero1: 'Own the Style', hero2: 'Keep the Vibe', hero_sub: 'Bold mixed fashion — men, kids. Discover the exclusive collection.', shop_now: 'Shop Now →', our_story: 'Our Story', s1: 'Collections', s2: 'Customers', s3: 'Products', featured: 'FEATURED', top: 'Top', colls: 'Collections', all: 'All', men: "Men's", kids: "Kids'", loading: 'Loading...', all_coll: 'All Collections', discover: 'Discover', style: 'Your Style', coll_sub: '15+ diverse collections', about_tag: 'About', about_h1: 'Story of', about_sub: 'Passion for fashion, commitment to quality', our_story2: 'Our Story', ab1: "Our journey started from a genuine passion — the belief that everyone deserves to wear what makes them feel confident and bold.", ab2: "We offer a carefully curated range of mixed clothing for men, and children.", ab3: "Every piece we choose tells a story — a lifestyle story.", v1: 'High Quality', v1d: 'Every piece selected with strict standards', v2: 'Fair Prices', v2d: 'Best price, no compromise', v3: 'Fast Delivery', v3d: 'We deliver as quickly as possible', v4: 'WhatsApp Service', v4d: 'Always available for you', order_title: 'Order Now', order_sub: 'Fill in your details — order sent via WhatsApp', your_cart: '🛒 Your Cart', f_name: 'Full Name *', f_phone: 'Phone *', f_addr: 'Address *', f_prod: 'Product', f_size: 'Size', f_notes: 'Notes', sel_prod: '-- Select --', send_wa: 'Send via WhatsApp', admin_title: 'Admin Panel', admin_sub: 'Enter access code', wrong_code: '❌ Wrong code', enter: 'Enter', dashboard: 'Dashboard', add_prod: '+ New Product', refresh: '🔄 Refresh', logout: 'Logout', total_prods: 'Total Products', total_ords: 'Total Orders', total_rev: 'Revenue (DZD)', products: 'Products', orders_tab: 'Orders', add_tab: 'Add / Edit', add_prod_title: 'Add New Product', f_cat: 'Category', f_price: 'Price (DZD) *', f_oldp: 'Old Price', f_qty: 'Quantity *', f_badge: 'Badge', f_img: 'Choose Image from Gallery *', f_desc: 'Description', f_sizes: 'Sizes (comma separated)', save: 'Save Product', cancel: 'Cancel', cart_title: '🛒 Cart', empty_cart: 'Your cart is empty', total: 'Total', order_now: '📱 Order Now', pick_size: 'Select size:', add_cart: 'Add to Cart 🛒', ft_desc: 'Your #1 store for mixed fashion.', ft_links: 'Links', ft_contact: 'Contact', rights: '© 2025 LUXE FASHION — All Rights Reserved', added: '✅ Added to cart!', order_sent: '✅ Opening WhatsApp...', saved: '✅ Saved!', deleted: '🗑 Deleted', fill_fields: '⚠️ Please fill required fields'
+    home: 'Home', collections: 'Collections', about: 'About', order: 'Order', admin: 'Admin', cart: 'Cart', new_arrivals: '✦ New Arrivals 2025', hero1: 'Own the Style', hero2: 'Keep the Vibe', hero_sub: 'Bold mixed fashion — men, kids. Discover the exclusive collection.', shop_now: 'Shop Now →', our_story: 'Our Story', s1: 'Collections', s2: 'Customers', s3: 'Products', featured: 'FEATURED', top: 'Top', colls: 'Collections', all: 'All', men: "Men's", kids: "Kids'", loading: 'Loading...', all_coll: 'All Collections', discover: 'Discover', style: 'Your Style', coll_sub: '15+ diverse collections', about_tag: 'About', about_h1: 'Story of', about_sub: 'Passion for fashion, commitment to quality', our_story2: 'Our Story', ab1: "Our journey started from a genuine passion — the belief that everyone deserves to wear what makes them feel confident and bold.", ab2: "We offer a carefully curated range of mixed clothing for men, and children.", ab3: "Every piece we choose tells a story — a lifestyle story.", v1: 'High Quality', v1d: 'Every piece selected with strict standards', v2: 'Fair Prices', v2d: 'Best price, no compromise', v3: 'Fast Delivery', v3d: 'We deliver as quickly as possible', v4: 'WhatsApp Service', v4d: 'Always available for you', order_title: 'Order Now', order_sub: 'Fill in your details — order sent via WhatsApp', your_cart: '🛒 Your Cart', f_name: 'Full Name *', f_phone: 'Phone *', f_addr: 'Address *', f_prod: 'Product', f_size: 'Size', f_notes: 'Notes', sel_prod: '-- Select --', send_wa: 'Send via WhatsApp', admin_title: 'Admin Panel', admin_sub: 'Enter access code', wrong_code: '❌ Wrong code', enter: 'Enter', dashboard: 'Dashboard', add_prod: '+ New Product', refresh: '🔄 Refresh', logout: 'Logout', total_prods: 'Total Products', total_ords: 'Total Orders', total_rev: 'Revenue (DZD)', products: 'Products', orders_tab: 'Orders', add_tab: 'Add / Edit', add_prod_title: 'Add New Product', f_cat: 'Category', f_price: 'Price (DZD) *', f_oldp: 'Old Price', f_qty: 'Quantity *', f_badge: 'Badge', f_img: 'Choose Image from Gallery *', f_desc: 'Description', f_sizes: 'Sizes (comma separated)', save: 'Save Product', cancel: 'Cancel', cart_title: '🛒 Cart', empty_cart: 'Your cart is empty', total: 'Total', order_now: '📱 Order Now', pick_size: 'Select size:', add_cart: 'Add to Cart 🛒', ft_desc: 'Your #1 store for mixed fashion.', ft_links: 'Links', ft_contact: 'Contact', rights: '© 2025 LUXE FASHION — All Rights Reserved', added: '✅ Added to cart!', order_sent: '✅ Opening WhatsApp...', saved: '✅ Saved!', deleted: '🗑 Deleted', fill_fields: '⚠️ Please fill required fields', f_img_source: 'Image Source *', from_gallery: 'From Gallery', upload_device: 'Upload from Device'
   }
 };
 function t(k) { return TX[curL][k] || TX.ar[k] || k; }
