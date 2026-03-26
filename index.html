@@ -5,243 +5,12 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>LUXE FASHION</title>
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Tajawal:wght@300;400;500;700;900&display=swap" rel="stylesheet">
-<style>
-:root{--red:#FF3B3B;--dark:#111;--white:#FAFAFA;--pink:#FFF0F0;--gray:#F2F2F2;--text:#1a1a1a;--muted:#777;--card:#fff;--border:#eee;--nav:rgba(250,250,250,0.95);}
-[data-theme=dark]{--white:#0f0f0f;--pink:#1a0808;--gray:#1e1e1e;--text:#f0f0f0;--muted:#888;--card:#1a1a1a;--border:#2a2a2a;--nav:rgba(15,15,15,0.95);}
-*{margin:0;padding:0;box-sizing:border-box;}
-body{font-family:'Tajawal',sans-serif;background:var(--white);color:var(--text);overflow-x:hidden;transition:background .3s,color .3s;}
-/* NAV */
-nav{position:fixed;top:0;left:0;right:0;z-index:1000;background:var(--nav);backdrop-filter:blur(20px);border-bottom:2px solid var(--border);height:64px;display:flex;align-items:center;padding:0 4%;gap:1rem;}
-.logo{font-family:'Bebas Neue',sans-serif;font-size:1.9rem;color:var(--red);cursor:pointer;letter-spacing:2px;flex-shrink:0;}
-.nav-links{display:flex;gap:1.5rem;list-style:none;flex:1;justify-content:center;}
-.nav-links a{font-size:.85rem;font-weight:700;color:var(--muted);cursor:pointer;text-transform:uppercase;letter-spacing:.8px;transition:color .2s;text-decoration:none;}
-.nav-links a:hover{color:var(--red);}
-.nav-r{display:flex;align-items:center;gap:.5rem;flex-shrink:0;}
-.ib{background:none;border:none;cursor:pointer;font-size:1rem;color:var(--text);width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;transition:background .2s;}
-.ib:hover{background:var(--gray);}
-.lp{background:var(--gray);border:none;border-radius:50px;padding:5px 13px;font-family:'Tajawal',sans-serif;font-weight:700;font-size:.78rem;cursor:pointer;color:var(--text);transition:all .2s;}
-.lp:hover{background:var(--red);color:#fff;}
-.cp{background:var(--red);border:none;border-radius:50px;padding:7px 16px;font-family:'Tajawal',sans-serif;font-weight:700;font-size:.85rem;cursor:pointer;color:#fff;display:flex;align-items:center;gap:5px;transition:all .2s;}
-.cp:hover{background:#c92020;transform:translateY(-1px);}
-.cn{background:#fff;color:var(--red);width:18px;height:18px;border-radius:50%;font-size:.7rem;font-weight:900;display:flex;align-items:center;justify-content:center;}
-.burger{display:none;flex-direction:column;gap:4px;cursor:pointer;background:none;border:none;padding:4px;}
-.burger span{width:22px;height:2px;background:var(--text);border-radius:2px;transition:.3s;}
-/* PAGES */
-.page{display:none;padding-top:64px;min-height:100vh;}
-.page.active{display:block;}
-/* HERO */
-.hero{position:relative;min-height:88vh;background:var(--pink);overflow:hidden;display:flex;align-items:center;padding:0 5%;}
-.hbg{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-family:'Bebas Neue',sans-serif;font-size:clamp(80px,18vw,220px);color:rgba(255,59,59,.05);white-space:nowrap;pointer-events:none;user-select:none;}
-.hc{position:relative;z-index:1;max-width:480px;}
-.htag{display:inline-block;background:var(--red);color:#fff;padding:5px 15px;border-radius:50px;font-size:.75rem;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;margin-bottom:1.1rem;animation:sd .7s ease both;}
-.htit{font-family:'Bebas Neue',sans-serif;font-size:clamp(2.8rem,7.5vw,6rem);line-height:.95;margin-bottom:.9rem;animation:sd .85s ease both;}
-.htit span{color:var(--red);display:block;}
-[data-theme=dark] .htit{color:#fff;}
-.hsub{font-size:.95rem;color:var(--muted);margin-bottom:1.8rem;line-height:1.7;animation:sd .95s ease both;}
-.hbtns{display:flex;gap:.9rem;flex-wrap:wrap;animation:sd 1.05s ease both;}
-.br{background:var(--red);color:#fff;border:none;padding:12px 28px;border-radius:50px;font-family:'Tajawal',sans-serif;font-size:.95rem;font-weight:700;cursor:pointer;transition:all .25s;}
-.br:hover{background:#c92020;transform:translateY(-3px);box-shadow:0 8px 25px rgba(255,59,59,.3);}
-.bo{background:transparent;color:var(--text);border:2px solid var(--border);padding:12px 28px;border-radius:50px;font-family:'Tajawal',sans-serif;font-size:.95rem;font-weight:700;cursor:pointer;transition:all .25s;}
-.bo:hover{border-color:var(--red);color:var(--red);}
-.himg{position:absolute;left:3%;bottom:0;height:82%;z-index:1;pointer-events:none;animation:flt 4s ease-in-out infinite;}
-.hst{position:absolute;left:2%;top:50%;transform:translateY(-50%);display:flex;flex-direction:column;gap:1rem;z-index:2;}
-.stb{background:var(--card);border-radius:14px;padding:12px 16px;text-align:center;box-shadow:0 4px 18px rgba(0,0,0,.08);}
-.stb strong{font-family:'Bebas Neue',sans-serif;font-size:1.7rem;color:var(--red);display:block;}
-.stb span{font-size:.68rem;color:var(--muted);font-weight:700;}
-@keyframes sd{from{opacity:0;transform:translateY(-18px);}to{opacity:1;transform:translateY(0);}}
-@keyframes flt{0%,100%{transform:translateY(0);}50%{transform:translateY(-16px);}}
-/* MARQUEE */
-.mq-w{background:var(--red);overflow:hidden;padding:9px 0;}
-.mq{display:flex;gap:2.5rem;animation:mqa 22s linear infinite;white-space:nowrap;}
-.mq span{font-family:'Bebas Neue',sans-serif;font-size:1.1rem;color:#fff;letter-spacing:2.5px;opacity:.9;}
-.mq .sep{color:rgba(255,255,255,.35);}
-@keyframes mqa{from{transform:translateX(0);}to{transform:translateX(-50%);}}
-/* SECTIONS */
-.sec{padding:60px 5%;}
-.sh{margin-bottom:2rem;}
-.stag{display:inline-block;background:var(--pink);color:var(--red);padding:3px 13px;border-radius:50px;font-size:.72rem;font-weight:800;text-transform:uppercase;letter-spacing:1.5px;margin-bottom:.5rem;}
-[data-theme=dark] .stag{background:#2a0a0a;}
-.stit{font-family:'Bebas Neue',sans-serif;font-size:clamp(1.8rem,4.5vw,3rem);line-height:1;}
-.stit em{color:var(--red);font-style:normal;}
-.sr{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:2rem;flex-wrap:wrap;gap:.75rem;}
-/* FILTERS */
-.fils{display:flex;gap:.4rem;flex-wrap:wrap;}
-.fb{background:var(--gray);border:none;border-radius:50px;padding:7px 16px;font-family:'Tajawal',sans-serif;font-size:.82rem;font-weight:700;cursor:pointer;color:var(--text);transition:all .2s;}
-.fb.on,.fb:hover{background:var(--red);color:#fff;}
-/* GRID */
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:1.1rem;}
-/* CARD */
-.card{background:var(--card);border-radius:18px;overflow:hidden;border:1px solid var(--border);transition:all .3s;cursor:pointer;position:relative;}
-.card:hover{transform:translateY(-7px);box-shadow:0 18px 45px rgba(255,59,59,.11);}
-.cimg{aspect-ratio:3/4;background:var(--gray);overflow:hidden;position:relative;}
-.cimg img{width:100%;height:100%;object-fit:cover;transition:transform .5s;}
-.card:hover .cimg img{transform:scale(1.07);}
-.cbadge{position:absolute;top:9px;right:9px;background:var(--red);color:#fff;padding:3px 11px;border-radius:50px;font-size:.68rem;font-weight:800;text-transform:uppercase;}
-.cbadge.new{background:#10b981;}.cbadge.sale{background:#f59e0b;}
-.cacts{position:absolute;bottom:9px;left:50%;transform:translateX(-50%) translateY(8px);display:flex;gap:.35rem;opacity:0;transition:all .3s;}
-.card:hover .cacts{opacity:1;transform:translateX(-50%) translateY(0);}
-.cab{background:#fff;border:none;width:36px;height:36px;border-radius:50%;cursor:pointer;font-size:.9rem;display:flex;align-items:center;justify-content:center;box-shadow:0 3px 10px rgba(0,0,0,.13);transition:all .2s;}
-.cab:hover{background:var(--red);color:#fff;}
-.cbody{padding:.9rem 1rem 1rem;}
-.ccat{font-size:.68rem;color:var(--red);font-weight:800;text-transform:uppercase;letter-spacing:.5px;}
-.cname{font-size:.95rem;font-weight:800;margin:3px 0 5px;}
-.cdesc{font-size:.78rem;color:var(--muted);line-height:1.5;margin-bottom:.7rem;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;}
-.cfoot{display:flex;align-items:center;justify-content:space-between;}
-.cprice{font-family:'Bebas Neue',sans-serif;font-size:1.35rem;color:var(--red);}
-.cprice s{font-size:.85rem;color:var(--muted);font-family:'Tajawal',sans-serif;margin-left:3px;}
-.csz{display:flex;gap:3px;}
-.sz{background:var(--gray);color:var(--muted);padding:2px 6px;border-radius:5px;font-size:.65rem;font-weight:700;}
-.addbtn{width:100%;margin-top:.7rem;padding:9px;background:var(--dark);color:#fff;border:none;border-radius:11px;font-family:'Tajawal',sans-serif;font-size:.88rem;font-weight:700;cursor:pointer;transition:all .2s;}
-[data-theme=dark] .addbtn{background:var(--red);}
-.addbtn:hover{background:var(--red);}
-/* LOADING */
-.ld{text-align:center;padding:2.5rem;color:var(--muted);}
-.spin{width:38px;height:38px;border:3px solid var(--gray);border-top-color:var(--red);border-radius:50%;animation:sp .7s linear infinite;margin:0 auto 1rem;}
-@keyframes sp{to{transform:rotate(360deg);}}
-/* ABOUT */
-.ab-hero{background:var(--dark);padding:70px 5% 50px;color:#fff;position:relative;overflow:hidden;}
-[data-theme=dark] .ab-hero{background:#000;}
-.ab-hero h1{font-family:'Bebas Neue',sans-serif;font-size:3.5rem;margin-bottom:.4rem;}
-.ab-hero h1 span{color:var(--red);}
-.ab-hero p{color:rgba(255,255,255,.55);font-size:.95rem;}
-.ab-grid{display:grid;grid-template-columns:1fr 1fr;gap:2.5rem;padding:55px 5%;align-items:center;}
-.ab-text h2{font-family:'Bebas Neue',sans-serif;font-size:2.2rem;margin-bottom:.8rem;}
-.ab-text p{color:var(--muted);line-height:1.8;margin-bottom:.7rem;font-size:.92rem;}
-.ab-vis{background:linear-gradient(135deg,var(--red),#ff8080);border-radius:22px;min-height:280px;display:flex;align-items:center;justify-content:center;font-size:5rem;}
-.vals{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:.9rem;padding:0 5% 55px;}
-.val{background:var(--card);border:1px solid var(--border);border-radius:18px;padding:1.3rem;text-align:center;}
-.vi{font-size:1.9rem;margin-bottom:.65rem;}
-.val h3{font-size:.95rem;font-weight:800;margin-bottom:.35rem;}
-.val p{font-size:.78rem;color:var(--muted);}
-/* ORDER */
-.ow{max-width:760px;margin:0 auto;padding:45px 5%;}
-.ow h1{font-family:'Bebas Neue',sans-serif;font-size:2.8rem;margin-bottom:.25rem;}
-.ow .sub{color:var(--muted);margin-bottom:1.8rem;font-size:.9rem;}
-.cprev{background:var(--pink);border-radius:14px;padding:1.1rem;margin-bottom:1.3rem;}
-[data-theme=dark] .cprev{background:#1a0808;}
-.cprev h3{font-size:.88rem;font-weight:800;margin-bottom:.6rem;}
-.cpi{display:flex;justify-content:space-between;padding:5px 0;font-size:.82rem;border-bottom:1px solid rgba(255,59,59,.1);}
-.cptot{font-weight:800;color:var(--red);margin-top:.4rem;font-size:.95rem;}
-.fbox{background:var(--card);border:1px solid var(--border);border-radius:18px;padding:1.5rem;}
-.frow{display:grid;grid-template-columns:1fr 1fr;gap:.9rem;}
-.fg{margin-bottom:.8rem;}
-.fg label{display:block;font-size:.8rem;font-weight:700;margin-bottom:4px;}
-.fg input,.fg select,.fg textarea{width:100%;padding:10px 13px;border:2px solid var(--border);border-radius:11px;font-family:'Tajawal',sans-serif;font-size:.9rem;background:var(--white);color:var(--text);outline:none;transition:border .2s;}
-.fg input:focus,.fg select:focus,.fg textarea:focus{border-color:var(--red);}
-.fg textarea{min-height:75px;resize:vertical;}
-.bwa{width:100%;padding:14px;background:linear-gradient(135deg,#25D366,#128C7E);color:#fff;border:none;border-radius:13px;font-family:'Tajawal',sans-serif;font-size:1rem;font-weight:800;cursor:pointer;transition:all .25s;display:flex;align-items:center;justify-content:center;gap:9px;margin-top:.9rem;}
-.bwa:hover{transform:translateY(-2px);box-shadow:0 8px 25px rgba(37,211,102,.3);}
-/* ADMIN */
-.alw{min-height:calc(100vh - 64px);display:flex;align-items:center;justify-content:center;padding:2rem;}
-.lbox{background:var(--card);border:1px solid var(--border);border-radius:22px;padding:2.2rem;max-width:360px;width:100%;text-align:center;box-shadow:0 18px 50px rgba(0,0,0,.07);}
-.lbox .lk{font-size:2.8rem;margin-bottom:.9rem;}
-.lbox h2{font-family:'Bebas Neue',sans-serif;font-size:1.9rem;margin-bottom:.25rem;}
-.lbox p{color:var(--muted);font-size:.85rem;margin-bottom:1.3rem;}
-.lbox input{width:100%;padding:12px;border:2px solid var(--border);border-radius:11px;font-size:1rem;font-family:'Tajawal',sans-serif;text-align:center;letter-spacing:4px;background:var(--white);color:var(--text);outline:none;margin-bottom:.9rem;transition:border .2s;}
-.lbox input:focus{border-color:var(--red);}
-.lerr{color:var(--red);font-size:.82rem;margin-bottom:.6rem;display:none;}
-.aw{max-width:1180px;margin:0 auto;padding:28px 4%;}
-.atop{display:flex;justify-content:space-between;align-items:center;margin-bottom:1.3rem;flex-wrap:wrap;gap:.75rem;}
-.atop h1{font-family:'Bebas Neue',sans-serif;font-size:2rem;}
-.bsm{padding:7px 18px;border-radius:50px;border:none;font-family:'Tajawal',sans-serif;font-weight:700;font-size:.82rem;cursor:pointer;transition:all .2s;}
-.bsm.r{background:var(--red);color:#fff;}.bsm.g{background:var(--gray);color:var(--text);}
-.bsm:hover{opacity:.85;transform:translateY(-1px);}
-.atabs{display:flex;gap:.6rem;margin-bottom:1.3rem;flex-wrap:wrap;}
-.atab{padding:8px 20px;border-radius:50px;border:2px solid var(--border);background:var(--card);color:var(--muted);font-family:'Tajawal',sans-serif;font-weight:700;cursor:pointer;transition:all .2s;font-size:.82rem;}
-.atab.on{border-color:var(--red);background:var(--red);color:#fff;}
-.tw{overflow-x:auto;}
-table{width:100%;border-collapse:collapse;background:var(--card);border-radius:14px;overflow:hidden;border:1px solid var(--border);}
-th{background:var(--dark);color:#fff;padding:11px 13px;text-align:right;font-size:.78rem;font-weight:700;}
-[data-theme=dark] th{background:#000;}
-td{padding:10px 13px;border-bottom:1px solid var(--border);font-size:.82rem;vertical-align:middle;}
-tr:hover td{background:var(--gray);}
-td img{width:44px;height:54px;object-fit:cover;border-radius:9px;}
-.sts{padding:3px 9px;border-radius:50px;font-size:.7rem;font-weight:800;}
-.sts.new{background:#fef3c7;color:#d97706;}.sts.ok{background:#d1fae5;color:#059669;}.sts.done{background:#dbeafe;color:#2563eb;}.sts.cx{background:#fee2e2;color:#dc2626;}
-[data-theme=dark] .sts.new{background:#2a1f00;color:#f59e0b;}[data-theme=dark] .sts.ok{background:#002a1a;color:#10b981;}[data-theme=dark] .sts.done{background:#001a2a;color:#3b82f6;}[data-theme=dark] .sts.cx{background:#2a0000;color:#ef4444;}
-.afm{background:var(--card);border:1px solid var(--border);border-radius:18px;padding:1.5rem;}
-.afm h3{font-family:'Bebas Neue',sans-serif;font-size:1.4rem;margin-bottom:1.1rem;}
-.ag{display:grid;grid-template-columns:1fr 1fr;gap:.8rem;}
-.ag .s2{grid-column:1/-1;}
-.astats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:.9rem;margin-bottom:1.3rem;}
-.asc{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:1.1rem;}
-.asc .n{font-family:'Bebas Neue',sans-serif;font-size:2rem;color:var(--red);}
-.asc .l{font-size:.72rem;color:var(--muted);font-weight:700;}
-/* CART PANEL */
-.ov{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:2000;}
-.ov.on{display:block;}
-.ctp{position:fixed;top:0;left:0;width:350px;max-width:95vw;height:100vh;background:var(--card);z-index:2001;transform:translateX(-100%);transition:transform .35s cubic-bezier(.4,0,.2,1);display:flex;flex-direction:column;border-right:1px solid var(--border);}
-.ctp.on{transform:translateX(0);}
-.cph{padding:1.1rem 1.4rem;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;}
-.cph h3{font-family:'Bebas Neue',sans-serif;font-size:1.4rem;}
-.cpb{flex:1;overflow-y:auto;padding:.9rem 1.4rem;}
-.ect{text-align:center;padding:2.5rem;color:var(--muted);}
-.ect .ei{font-size:2.8rem;margin-bottom:.9rem;}
-.ci{display:flex;gap:.8rem;padding:.8rem 0;border-bottom:1px solid var(--border);}
-.ci img{width:62px;height:74px;object-fit:cover;border-radius:11px;background:var(--gray);}
-.cin{flex:1;}
-.cin .cn2{font-weight:800;font-size:.88rem;}
-.cin .cm{font-size:.72rem;color:var(--muted);margin:3px 0;}
-.cin .cpr{font-weight:800;color:var(--red);font-size:.9rem;}
-.ciq{display:flex;align-items:center;gap:6px;margin-top:5px;}
-.qb{background:var(--gray);border:none;width:25px;height:25px;border-radius:7px;cursor:pointer;font-size:.85rem;font-weight:900;color:var(--red);}
-.crm{background:none;border:none;color:#ef4444;cursor:pointer;font-size:.95rem;align-self:flex-start;margin-right:auto;}
-.cpf{padding:1.1rem 1.4rem;border-top:1px solid var(--border);}
-.tr{display:flex;justify-content:space-between;font-weight:800;font-size:1rem;margin-bottom:.8rem;}
-.tr span:last-child{color:var(--red);}
-/* MODAL */
-.mov{display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:3000;padding:18px;align-items:center;justify-content:center;}
-.mov.on{display:flex;}
-.modal{background:var(--card);border-radius:22px;max-width:700px;width:100%;max-height:90vh;overflow-y:auto;display:grid;grid-template-columns:1fr 1fr;animation:pi .3s ease;}
-@keyframes pi{from{transform:scale(.92);opacity:0;}to{transform:scale(1);opacity:1;}}
-.mimg{background:var(--gray);border-radius:22px 0 0 22px;overflow:hidden;}
-.mimg img{width:100%;height:100%;object-fit:cover;}
-.minf{padding:1.6rem;}
-.mcl{background:var(--gray);border:none;border-radius:50%;width:32px;height:32px;cursor:pointer;font-size:.95rem;display:flex;align-items:center;justify-content:center;margin-bottom:.9rem;float:left;color:var(--text);}
-.mcat{font-size:.68rem;color:var(--red);font-weight:800;text-transform:uppercase;letter-spacing:.8px;}
-.mname{font-family:'Bebas Neue',sans-serif;font-size:1.9rem;line-height:1;margin:5px 0;}
-.mpr{font-family:'Bebas Neue',sans-serif;font-size:1.7rem;color:var(--red);margin-bottom:.8rem;}
-.mdesc{font-size:.85rem;color:var(--muted);line-height:1.7;margin-bottom:1.1rem;}
-.szl{font-size:.8rem;font-weight:800;margin-bottom:.45rem;}
-.szrow{display:flex;gap:.35rem;flex-wrap:wrap;margin-bottom:1.1rem;}
-.szo{padding:6px 13px;border:2px solid var(--border);border-radius:9px;cursor:pointer;font-size:.82rem;font-weight:700;background:var(--card);color:var(--text);transition:all .2s;}
-.szo.on,.szo:hover{border-color:var(--red);background:var(--pink);color:var(--red);}
-[data-theme=dark] .szo.on{background:#2a0808;}
-/* TOAST */
-.toast{position:fixed;bottom:1.5rem;right:1.5rem;background:var(--dark);color:#fff;padding:10px 20px;border-radius:50px;font-size:.88rem;font-weight:700;z-index:9999;transform:translateY(70px);opacity:0;transition:all .35s;}
-.toast.show{transform:translateY(0);opacity:1;}
-.toast.ok{background:#10b981;}.toast.er{background:#ef4444;}
-/* FOOTER */
-footer{background:var(--dark);color:rgba(255,255,255,.75);padding:2.5rem 5% 1.3rem;}
-[data-theme=dark] footer{background:#000;}
-.ftg{display:grid;grid-template-columns:2fr 1fr 1fr;gap:2.5rem;margin-bottom:1.8rem;}
-.ftl{font-family:'Bebas Neue',sans-serif;font-size:1.9rem;color:var(--red);display:block;margin-bottom:.45rem;}
-.ftd{font-size:.82rem;opacity:.62;line-height:1.7;}
-.ftc h4{font-size:.85rem;font-weight:800;color:#fff;margin-bottom:.8rem;}
-.ftc a{display:block;font-size:.78rem;opacity:.58;cursor:pointer;margin-bottom:.35rem;transition:opacity .2s;text-decoration:none;color:inherit;}
-.ftc a:hover{opacity:1;color:var(--red);}
-.ftb{border-top:1px solid rgba(255,255,255,.07);padding-top:1.1rem;text-align:center;font-size:.74rem;opacity:.42;}
-/* RESPONSIVE */
-@media(max-width:768px){
-  .nav-links{display:none;position:absolute;top:64px;left:0;right:0;background:var(--nav);flex-direction:column;padding:1rem 5%;border-bottom:1px solid var(--border);}
-  .nav-links.on{display:flex;}
-  .burger{display:flex;}
-  .himg,.hst,.hbg{display:none;}
-  .hc{max-width:100%;}
-  .hero{min-height:auto;padding:45px 5%;}
-  .modal{grid-template-columns:1fr;}
-  .mimg{height:220px;border-radius:22px 22px 0 0;}
-  .ftg{grid-template-columns:1fr;}
-  .ab-grid{grid-template-columns:1fr;}
-  .frow,.ag{grid-template-columns:1fr;}
-  .ag .s2{grid-column:1;}
-}
-</style>
+<link rel="stylesheet" href="styles.css">
 </head>
 <body>
 
 <nav>
-  <div class="logo" onclick="go('home')">LUXE</div>
+  <div class="logo" onclick="location.href='index.html'">LUXE</div>
   <ul class="nav-links" id="nl">
     <li><a onclick="go('home')" data-k="home">الرئيسية</a></li>
     <li><a onclick="go('coll')" data-k="collections">المجموعات</a></li>
@@ -264,30 +33,33 @@ footer{background:var(--dark);color:rgba(255,255,255,.75);padding:2.5rem 5% 1.3r
     <div class="hc">
       <div class="htag" data-k="new_arrivals">✦ وصل حديثاً 2025</div>
       <h1 class="htit"><span data-k="hero1">امتلك الأسلوب</span><span data-k="hero2">أحكم الجرأة</span></h1>
-      <p class="hsub" data-k="hero_sub">أزياء مختلطة بروح عصرية جريئة — رجالي، نسائي، أطفال. اكتشف الكولكشن الحصري.</p>
+      <p class="hsub" data-k="hero_sub">أزياء مختلطة بروح عصرية جريئة — رجالي، أطفال. اكتشف الكولكشن الحصري.</p>
       <div class="hbtns">
         <button class="br" onclick="go('coll')" data-k="shop_now">تسوق الآن →</button>
         <button class="bo" onclick="go('about')" data-k="our_story">قصتنا</button>
       </div>
     </div>
-    <img class="himg" src="https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=600&q=80" alt="" onerror="this.style.display='none'">
     <div class="hst">
       <div class="stb"><strong>15+</strong><span data-k="s1">كولكشن</span></div>
       <div class="stb"><strong>2K+</strong><span data-k="s2">عميل</span></div>
       <div class="stb"><strong>500+</strong><span data-k="s3">منتج</span></div>
     </div>
   </div>
+
+  <!-- 3-IMAGE GALLERY -->
+  <div class="gallery-3" id="hGallery"></div>
+
   <div class="mq-w"><div class="mq" id="mq">
     <span>NEW ARRIVALS</span><span class="sep">✦</span><span>SUMMER 2025</span><span class="sep">✦</span><span>LUXE FASHION</span><span class="sep">✦</span><span>FREE SHIPPING</span><span class="sep">✦</span><span>EXCLUSIVE DROPS</span><span class="sep">✦</span>
     <span>NEW ARRIVALS</span><span class="sep">✦</span><span>SUMMER 2025</span><span class="sep">✦</span><span>LUXE FASHION</span><span class="sep">✦</span><span>FREE SHIPPING</span><span class="sep">✦</span><span>EXCLUSIVE DROPS</span><span class="sep">✦</span>
   </div></div>
+
   <div class="sec">
     <div class="sr">
       <div class="sh"><div class="stag" data-k="featured">مميز</div><h2 class="stit"><em data-k="top">أبرز</em> <span data-k="colls">المجموعات</span></h2></div>
       <div class="fils" id="hF">
         <button class="fb on" onclick="filt('all',this,'hG')" data-k="all">الكل</button>
         <button class="fb" onclick="filt('رجالي',this,'hG')" data-k="men">رجالي</button>
-        <button class="fb" onclick="filt('نسائي',this,'hG')" data-k="women">نسائي</button>
         <button class="fb" onclick="filt('أطفال',this,'hG')" data-k="kids">أطفال</button>
       </div>
     </div>
@@ -307,7 +79,6 @@ footer{background:var(--dark);color:rgba(255,255,255,.75);padding:2.5rem 5% 1.3r
     <div class="fils" id="cF" style="margin-bottom:1.8rem;">
       <button class="fb on" onclick="filt('all',this,'cG')" data-k="all">الكل</button>
       <button class="fb" onclick="filt('رجالي',this,'cG')" data-k="men">رجالي</button>
-      <button class="fb" onclick="filt('نسائي',this,'cG')" data-k="women">نسائي</button>
       <button class="fb" onclick="filt('أطفال',this,'cG')" data-k="kids">أطفال</button>
     </div>
     <div class="grid" id="cG"><div class="ld"><div class="spin"></div><p data-k="loading">جاري التحميل...</p></div></div>
@@ -325,16 +96,10 @@ footer{background:var(--dark);color:rgba(255,255,255,.75);padding:2.5rem 5% 1.3r
     <div class="ab-text">
       <h2 data-k="our_story2">قصتنا</h2>
       <p data-k="ab1">بدأت رحلتنا من شغف حقيقي — الإيمان بأن كل شخص يستحق أن يرتدي ما يجعله يشعر بالثقة والجرأة.</p>
-      <p data-k="ab2">نقدم تشكيلة مختارة بعناية من الملابس المختلطة للرجال، النساء، والأطفال. بأسعار عادلة وجودة لا نتنازل عنها.</p>
+      <p data-k="ab2">نقدم تشكيلة مختارة بعناية من الملابس المختلطة للرجال، والأطفال. بأسعار عادلة وجودة لا نتنازل عنها.</p>
       <p data-k="ab3">كل قطعة نختارها تحكي قصة — قصة أسلوب حياة.</p>
     </div>
     <div class="ab-vis">👗</div>
-  </div>
-  <div class="vals">
-    <div class="val"><div class="vi">✨</div><h3 data-k="v1">جودة مضمونة</h3><p data-k="v1d">نختار كل قطعة بمعايير صارمة</p></div>
-    <div class="val"><div class="vi">💰</div><h3 data-k="v2">أسعار عادلة</h3><p data-k="v2d">أفضل سعر دون تنازل</p></div>
-    <div class="val"><div class="vi">🚀</div><h3 data-k="v3">توصيل سريع</h3><p data-k="v3d">نصلك في أسرع وقت</p></div>
-    <div class="val"><div class="vi">📱</div><h3 data-k="v4">خدمة واتساب</h3><p data-k="v4d">متاحون لك دائماً</p></div>
   </div>
 </div>
 
@@ -343,11 +108,13 @@ footer{background:var(--dark);color:rgba(255,255,255,.75);padding:2.5rem 5% 1.3r
   <div class="ow">
     <h1 data-k="order_title">اطلب الآن</h1>
     <p class="sub" data-k="order_sub">أكمل بياناتك — الطلب يصلك عبر واتساب</p>
+
     <div id="cprev" style="display:none;" class="cprev">
       <h3 data-k="your_cart">🛒 سلتك</h3>
       <div id="cpit"></div>
       <div class="cptot" id="cptot"></div>
     </div>
+
     <div class="fbox">
       <div class="frow">
         <div class="fg"><label data-k="f_name">الاسم *</label><input id="oN" type="text" placeholder="محمد أمين..."></div>
@@ -381,42 +148,37 @@ footer{background:var(--dark);color:rgba(255,255,255,.75);padding:2.5rem 5% 1.3r
       <h1>🛠 <span data-k="dashboard">لوحة التحكم</span></h1>
       <div style="display:flex;gap:.4rem;flex-wrap:wrap;">
         <button class="bsm r" onclick="adminTab('add')" data-k="add_prod">+ منتج جديد</button>
-        <button class="bsm g" onclick="syncP()" data-k="refresh">🔄 تحديث</button>
+        <button class="bsm g" onclick="adminTab('home_imgs')">🖼 صور الواجهة</button>
         <button class="bsm g" onclick="doLogout()" data-k="logout">خروج</button>
       </div>
     </div>
     <div class="astats">
       <div class="asc"><div class="n" id="sP">0</div><div class="l" data-k="total_prods">إجمالي المنتجات</div></div>
-      <div class="asc"><div class="n" id="sO">0</div><div class="l" data-k="total_ords">إجمالي الطلبات</div></div>
-      <div class="asc"><div class="n" id="sR">0</div><div class="l" data-k="total_rev">المبيعات (دج)</div></div>
     </div>
     <div class="atabs">
       <button class="atab on" onclick="adminTab('products')" data-k="products">المنتجات</button>
-      <button class="atab" onclick="adminTab('orders')" data-k="orders_tab">الطلبات</button>
       <button class="atab" onclick="adminTab('add')" data-k="add_tab">إضافة / تعديل</button>
     </div>
-    <div id="aProds"><div class="tw" id="aTw"><div class="ld"><div class="spin"></div></div></div></div>
-    <div id="aOrds" style="display:none;"><div class="tw" id="aOw"><div class="ld"><div class="spin"></div></div></div></div>
+    <div id="aProds"><div class="tw" id="aTw"></div></div>
+    <div id="aHomeImgs" style="display:none;"><div class="afm" id="aHiw"></div></div>
     <div id="aFm" style="display:none;">
       <div class="afm">
         <h3 id="fmTit" data-k="add_prod_title">إضافة منتج جديد</h3>
         <input type="hidden" id="eid">
         <div class="ag">
-          <div class="fg"><label data-k="f_name">الاسم (عربي) *</label><input id="fNm" type="text"></div>
-          <div class="fg"><label>Name (EN)</label><input id="fNe" type="text"></div>
-          <div class="fg"><label>Nom (FR)</label><input id="fNf" type="text"></div>
-          <div class="fg"><label data-k="f_cat">الفئة</label><select id="fCt"><option value="رجالي">رجالي</option><option value="نسائي">نسائي</option><option value="أطفال">أطفال</option></select></div>
+          <div class="fg"><label data-k="f_name">الاسم *</label><input id="fNm" type="text"></div>
+          <div class="fg"><label data-k="f_cat">الفئة</label><select id="fCt"><option value="رجالي">رجالي</option><option value="أطفال">أطفال</option></select></div>
           <div class="fg"><label data-k="f_price">السعر (دج) *</label><input id="fPr" type="number"></div>
           <div class="fg"><label data-k="f_oldp">السعر القديم</label><input id="fOp" type="number"></div>
           <div class="fg"><label data-k="f_qty">الكمية *</label><input id="fQt" type="number"></div>
           <div class="fg"><label data-k="f_badge">الشارة</label><select id="fBg"><option value="">بدون</option><option value="جديد">جديد</option><option value="تخفيض">تخفيض</option><option value="حصري">حصري</option></select></div>
-          <div class="fg s2"><label data-k="f_img">رابط الصورة *</label><input id="fIm" type="text" placeholder="https://images.unsplash.com/..."></div>
-          <div class="fg s2"><label data-k="f_desc">الوصف (عربي)</label><textarea id="fDe"></textarea></div>
-          <div class="fg s2"><label>Description (EN)</label><textarea id="fDn"></textarea></div>
-          <div class="fg s2"><label>Description (FR)</label><textarea id="fDf"></textarea></div>
+          <div class="fg s2">
+            <label data-k="f_img">اختر الصورة من المعرض *</label>
+            <div id="prodGallery" style="display:flex; gap:5px; flex-wrap:wrap; margin-top:5px;"></div>
+          </div>
+          <div class="fg s2"><label data-k="f_desc">الوصف</label><textarea id="fDe"></textarea></div>
           <div class="fg s2"><label data-k="f_sizes">المقاسات (بفاصلة)</label><input id="fSz" type="text" value="XS,S,M,L,XL,XXL"></div>
         </div>
-        <div id="fmSt" style="margin:.5rem 0;font-size:.82rem;color:var(--red);display:none;"></div>
         <div style="display:flex;gap:.6rem;margin-top:.9rem;flex-wrap:wrap;">
           <button class="br" onclick="saveProd()" id="svBtn" data-k="save">💾 حفظ المنتج</button>
           <button class="bsm g" onclick="adminTab('products')" data-k="cancel">إلغاء</button>
@@ -456,297 +218,13 @@ footer{background:var(--dark);color:rgba(255,255,255,.75);padding:2.5rem 5% 1.3r
 
 <footer>
   <div class="ftg">
-    <div><span class="ftl">LUXE</span><p class="ftd" data-k="ft_desc">متجرك للأزياء المختلطة — رجالي، نسائي، أطفال. جودة، جرأة، أسعار لا تُقاوم.</p></div>
-    <div class="ftc"><h4 data-k="ft_links">روابط</h4><a onclick="go('home')" data-k="home">الرئيسية</a><a onclick="go('coll')" data-k="collections">المجموعات</a><a onclick="go('about')" data-k="about">من نحن</a><a onclick="go('order')" data-k="order">اطلب الآن</a></div>
+    <div><span class="ftl">LUXE</span><p class="ftd" data-k="ft_desc">متجرك للأزياء المختلطة — رجالي، أطفال. جودة، جرأة، أسعار لا تُقاوم.</p></div>
+    <div class="ftc"><h4 data-k="ft_links">روابط</h4><a onclick="go('home')" data-k="home">الرئيسية</a><a onclick="go('coll')" data-k="collections">المجموعات</a><a onclick="go('about')" data-k="about">من نحن</a><a onclick="go('order')" data-k="order_now">اطلب الآن</a></div>
     <div class="ftc"><h4 data-k="ft_contact">تواصل</h4><a href="https://wa.me/213655295217" target="_blank">📱 واتساب</a><a>📍 الجزائر</a></div>
   </div>
   <div class="ftb" data-k="rights">© 2025 LUXE FASHION — جميع الحقوق محفوظة</div>
 </footer>
 
-<script>
-// ── CONFIG ──
-const API='https://script.google.com/macros/s/AKfycbz9HrQuPhqcWLmIatSKKecRnz5xHMQz89PGH8CibdwdZT9wtQsxP3Z1A47_S1wU_hou7A/exec';
-const WA='213655295217';
-const CODE='CNSy7zbs';
-
-// ── API ──
-async function callAPI(d){
-  try{
-    console.log("Calling API with data:", d);
-    const r=await fetch(API,{method:'POST',body:JSON.stringify(d)});
-    const res=await r.json();
-    console.log("API Response:", res);
-    return res;
-  }catch(e){
-    console.error("API Fetch Error:", e);
-    return{error:e.toString()};
-  }
-}
-
-// ── PRODUCTS ──
-let prods=[], loading=false;
-async function loadProds(){
-  if(loading)return; loading=true;
-  const r=await callAPI({action:'getProducts'});
-  if(r.products) prods=r.products.map(p=>({...p,price:+p.price||0,oldPrice:+p.oldPrice||0,qty:+p.qty||0}));
-  loading=false;
-  renderAll(); fillSel();
-}
-function renderAll(){renderG('all','hG');renderG('all','cG');}
-function pn(p){return(curL==='en'&&p.nameEn)?p.nameEn:(curL==='fr'&&p.nameFr)?p.nameFr:p.name;}
-function pd(p){return(curL==='en'&&p.descEn)?p.descEn:(curL==='fr'&&p.descFr)?p.descFr:p.desc||'';}
-function renderG(cat,gid){
-  const el=document.getElementById(gid);if(!el)return;
-  const list=cat==='all'?prods:prods.filter(p=>p.cat===cat);
-  if(!list.length){el.innerHTML=`<div class="ld"><p style="color:var(--muted)">${prods.length?'لا توجد منتجات في هذه الفئة':'لا توجد منتجات — أضف من لوحة التحكم'}</p></div>`;return;}
-  el.innerHTML=list.map(p=>{
-    const bc=p.badge==='جديد'?'new':p.badge==='تخفيض'?'sale':'';
-    return`<div class="card" onclick="openMod('${p.id}')">
-      <div class="cimg">
-        <img src="${p.img||''}" alt="${pn(p)}" loading="lazy" onerror="this.src='https://images.unsplash.com/photo-1523381210434-271e8be1f52b?w=400&q=60'">
-        ${p.badge?`<div class="cbadge ${bc}">${p.badge}</div>`:''}
-        <div class="cacts">
-          <button class="cab" onclick="event.stopPropagation();qAdd('${p.id}')">🛒</button>
-          <button class="cab" onclick="event.stopPropagation();openMod('${p.id}')">👁</button>
-        </div>
-      </div>
-      <div class="cbody">
-        <div class="ccat">${p.cat}</div>
-        <div class="cname">${pn(p)}</div>
-        <div class="cdesc">${pd(p)}</div>
-        <div class="cfoot">
-          <div class="cprice">${p.oldPrice?`<s>${p.oldPrice}</s> `:''}${p.price} دج</div>
-          <div class="csz">${(p.sizes||'').split(',').slice(0,3).map(s=>`<span class="sz">${s}</span>`).join('')}</div>
-        </div>
-        <button class="addbtn" onclick="event.stopPropagation();qAdd('${p.id}')">${t('add_cart')}</button>
-      </div>
-    </div>`;
-  }).join('');
-}
-function filt(cat,btn,gid){btn.closest('.fils').querySelectorAll('.fb').forEach(b=>b.classList.remove('on'));btn.classList.add('on');renderG(cat,gid);}
-
-// ── MODAL ──
-let modId=null,picSz='';
-function openMod(id){
-  const p=prods.find(x=>String(x.id)===String(id));if(!p)return;
-  modId=id; picSz=(p.sizes||'').split(',')[0]||'';
-  document.getElementById('mI').src=p.img||'';
-  document.getElementById('mCat').textContent=p.cat;
-  document.getElementById('mNm').textContent=pn(p);
-  document.getElementById('mPr').innerHTML=`${p.oldPrice?`<s style="font-size:.9rem;color:var(--muted);font-family:'Tajawal',sans-serif">${p.oldPrice} دج</s> `:''}${p.price} دج`;
-  document.getElementById('mDe').textContent=pd(p);
-  document.getElementById('mSz').innerHTML=(p.sizes||'').split(',').map((s,i)=>`<button class="szo${i===0?' on':''}" onclick="pSz(this,'${s}')">${s}</button>`).join('');
-  document.getElementById('mov').classList.add('on');
-  document.body.style.overflow='hidden';
-}
-function closeMod(){document.getElementById('mov').classList.remove('on');document.body.style.overflow='';}
-document.getElementById('mov').addEventListener('click',e=>{if(e.target===e.currentTarget)closeMod();});
-function pSz(el,s){document.querySelectorAll('.szo').forEach(b=>b.classList.remove('on'));el.classList.add('on');picSz=s;}
-function addFromMod(){const p=prods.find(x=>String(x.id)===String(modId));if(p){addCart(p,picSz);closeMod();}}
-
-// ── CART ──
-let cart=[];
-function qAdd(id){const p=prods.find(x=>String(x.id)===String(id));if(p)addCart(p,(p.sizes||'M').split(',')[0]);}
-function addCart(p,size){
-  const ex=cart.find(x=>x.id==p.id&&x.size===size);
-  if(ex)ex.qty++;else cart.push({id:p.id,name:p.name,price:p.price,img:p.img,size,qty:1});
-  updCart();toast(t('added'),'ok');
-}
-function updCart(){
-  const tot=cart.reduce((s,i)=>s+i.price*i.qty,0);
-  document.getElementById('cnum').textContent=cart.reduce((s,i)=>s+i.qty,0);
-  document.getElementById('ctot').textContent=tot.toLocaleString()+' دج';
-  const b=document.getElementById('cpb');
-  if(!cart.length){b.innerHTML=`<div class="ect"><div class="ei">🛍️</div><p>${t('empty_cart')}</p></div>`;return;}
-  b.innerHTML=cart.map(i=>`
-    <div class="ci">
-      <img src="${i.img||''}" onerror="this.src='https://images.unsplash.com/photo-1523381210434-271e8be1f52b?w=100&q=60'">
-      <div class="cin">
-        <div class="cn2">${i.name}</div>
-        <div class="cm">المقاس: ${i.size}</div>
-        <div class="cpr">${(i.price*i.qty).toLocaleString()} دج</div>
-        <div class="ciq">
-          <button class="qb" onclick="chQ('${i.id}','${i.size}',-1)">−</button>
-          <span>${i.qty}</span>
-          <button class="qb" onclick="chQ('${i.id}','${i.size}',1)">+</button>
-        </div>
-      </div>
-      <button class="crm" onclick="rmC('${i.id}','${i.size}')">🗑</button>
-    </div>`).join('');
-}
-function chQ(id,sz,d){const i=cart.find(x=>x.id==id&&x.size===sz);if(!i)return;i.qty+=d;if(i.qty<=0)rmC(id,sz);else updCart();}
-function rmC(id,sz){cart=cart.filter(x=>!(x.id==id&&x.size===sz));updCart();}
-function toggleCart(){document.getElementById('ctp').classList.toggle('on');document.getElementById('ov').classList.toggle('on');document.body.style.overflow=document.getElementById('ctp').classList.contains('on')?'hidden':'';}
-function gotoOrder(){toggleCart();go('order');}
-
-// ── ORDER ──
-function fillSel(){
-  const s=document.getElementById('oPr');if(!s)return;
-  s.innerHTML=`<option value="">${t('sel_prod')}</option>`+prods.map(p=>`<option value="${p.id}">${pn(p)} — ${p.price} دج</option>`).join('');
-}
-function updOC(){
-  if(!cart.length){document.getElementById('cprev').style.display='none';return;}
-  document.getElementById('cprev').style.display='block';
-  document.getElementById('cpit').innerHTML=cart.map(i=>`<div class="cpi"><span>${i.name} (${i.size}) ×${i.qty}</span><span>${(i.price*i.qty).toLocaleString()} دج</span></div>`).join('');
-  document.getElementById('cptot').textContent=`${t('total')}: ${cart.reduce((s,i)=>s+i.price*i.qty,0).toLocaleString()} دج`;
-}
-async function sendOrder(){
-  const name=document.getElementById('oN').value.trim();
-  const phone=document.getElementById('oP').value.trim();
-  const addr=document.getElementById('oA').value.trim();
-  if(!name||!phone||!addr){toast(t('fill_fields'),'er');return;}
-  const pid=document.getElementById('oPr').value;
-  const pname=pid?pn(prods.find(p=>p.id==pid)||{name:'غير محدد'}):'غير محدد';
-  const size=document.getElementById('oS').value;
-  const notes=document.getElementById('oNt').value.trim();
-  const items=cart.length?cart.map(i=>`${i.name}(${i.size})x${i.qty}`).join(', '):pname;
-  const total=cart.length?cart.reduce((s,i)=>s+i.price*i.qty,0):0;
-  callAPI({action:'saveOrder',order:{name,phone,address:addr,items,total,notes}});
-  const lines=cart.length?cart.map(i=>`  - ${i.name} (${i.size}) × ${i.qty} = ${(i.price*i.qty).toLocaleString()} دج`).join('\n'):`  - ${pname} (${size})`;
-  const msg=encodeURIComponent(`🛍️ *طلب جديد — LUXE FASHION*\n\n👤 ${name}\n📱 ${phone}\n📍 ${addr}\n\n🛒 *الطلب:*\n${lines}\n`+(total?`\n💰 المجموع: ${total.toLocaleString()} دج\n`:'')+(notes?`\n📝 ${notes}\n`:'')+`\n⏰ ${new Date().toLocaleString('ar-DZ')}`);
-  window.open(`https://wa.me/${WA}?text=${msg}`,'_blank');
-  toast(t('order_sent'),'ok');
-}
-
-// ── ADMIN ──
-let loggedIn=false, orders=[];
-function doLogin(){
-  if(document.getElementById('ac').value===CODE){
-    loggedIn=true;
-    document.getElementById('aLg').style.display='none';
-    document.getElementById('aP').style.display='block';
-    document.getElementById('lerr').style.display='none';
-    syncP(); loadOrds();
-  }else{document.getElementById('lerr').style.display='block';document.getElementById('ac').value='';}
-}
-function doLogout(){loggedIn=false;document.getElementById('aLg').style.display='flex';document.getElementById('aP').style.display='none';document.getElementById('ac').value='';}
-function adminTab(tab){
-  document.querySelectorAll('.atab').forEach((b,i)=>b.classList.toggle('on',['products','orders','add'][i]===tab));
-  document.getElementById('aProds').style.display=tab==='products'?'block':'none';
-  document.getElementById('aOrds').style.display=tab==='orders'?'block':'none';
-  document.getElementById('aFm').style.display=tab==='add'?'block':'none';
-  if(tab==='add')clearFm();
-}
-function clearFm(){
-  document.getElementById('eid').value='';
-  ['fNm','fNe','fNf','fDe','fDn','fDf','fIm','fOp'].forEach(id=>document.getElementById(id).value='');
-  document.getElementById('fPr').value='';document.getElementById('fQt').value='';
-  document.getElementById('fSz').value='XS,S,M,L,XL,XXL';
-  document.getElementById('fBg').value='';document.getElementById('fCt').value='رجالي';
-  document.getElementById('fmTit').setAttribute('data-k','add_prod_title');
-  document.getElementById('fmTit').textContent=t('add_prod_title');
-  document.getElementById('fmSt').style.display='none';
-}
-async function syncP(){
-  document.getElementById('aTw').innerHTML='<div class="ld"><div class="spin"></div></div>';
-  await loadProds(); renderAdmP();
-}
-function renderAdmP(){
-  document.getElementById('sP').textContent=prods.length;
-  const w=document.getElementById('aTw');
-  if(!prods.length){w.innerHTML='<p style="padding:1.5rem;color:var(--muted)">لا توجد منتجات — أضف منتجاً جديداً</p>';return;}
-  w.innerHTML=`<table><thead><tr><th>الصورة</th><th>الاسم</th><th>الفئة</th><th>السعر</th><th>الكمية</th><th>الإجراءات</th></tr></thead><tbody>${prods.map(p=>`<tr><td><img src="${p.img||''}" onerror="this.src='https://images.unsplash.com/photo-1523381210434-271e8be1f52b?w=80&q=60'"></td><td><strong>${p.name}</strong></td><td>${p.cat}</td><td style="color:var(--red);font-weight:800">${(+p.price).toLocaleString()} دج</td><td>${p.qty}</td><td><button class="bsm r" style="margin-left:4px" onclick="editP('${p.id}')">✏️ تعديل</button><button class="bsm g" onclick="delP('${p.id}')">🗑 حذف</button></td></tr>`).join('')}</tbody></table>`;
-}
-function editP(id){
-  const p=prods.find(x=>String(x.id)===String(id));if(!p)return;
-  adminTab('add');
-  document.getElementById('eid').value=p.id;
-  document.getElementById('fNm').value=p.name||'';document.getElementById('fNe').value=p.nameEn||'';
-  document.getElementById('fNf').value=p.nameFr||'';document.getElementById('fCt').value=p.cat||'رجالي';
-  document.getElementById('fPr').value=p.price||'';document.getElementById('fOp').value=p.oldPrice||'';
-  document.getElementById('fQt').value=p.qty||'';document.getElementById('fBg').value=p.badge||'';
-  document.getElementById('fIm').value=p.img||'';document.getElementById('fDe').value=p.desc||'';
-  document.getElementById('fDn').value=p.descEn||'';document.getElementById('fDf').value=p.descFr||'';
-  document.getElementById('fSz').value=p.sizes||'XS,S,M,L,XL,XXL';
-  document.getElementById('fmTit').textContent='✏️ تعديل: '+p.name;
-}
-async function saveProd(){
-  const name=document.getElementById('fNm').value.trim();
-  const price=document.getElementById('fPr').value;
-  const qty=document.getElementById('fQt').value;
-  const img=document.getElementById('fIm').value.trim();
-  if(!name||!price||!qty||!img){toast(t('fill_fields'),'er');return;}
-  const btn=document.getElementById('svBtn');
-  const st=document.getElementById('fmSt');
-  btn.textContent='⏳ جاري الحفظ...';btn.disabled=true;
-  st.style.display='block';st.textContent='⏳ يتم الحفظ في Google Sheets...';st.style.color='var(--red)';
-  const eid=document.getElementById('eid').value;
-  const prod={id:eid||'',name,price:+price,oldPrice:+document.getElementById('fOp').value||0,qty:+qty,img,
-    cat:document.getElementById('fCt').value,badge:document.getElementById('fBg').value,
-    nameEn:document.getElementById('fNe').value.trim(),nameFr:document.getElementById('fNf').value.trim(),
-    desc:document.getElementById('fDe').value.trim(),descEn:document.getElementById('fDn').value.trim(),
-    descFr:document.getElementById('fDf').value.trim(),sizes:document.getElementById('fSz').value.trim()||'XS,S,M,L,XL,XXL'};
-  const res=await callAPI({action:'saveProduct',product:prod,isEdit:!!eid});
-  btn.textContent='💾 '+t('save');btn.disabled=false;
-  if(res.success){
-    st.textContent='✅ تم الحفظ في Google Sheets!';st.style.color='#10b981';
-    toast(t('saved'),'ok');
-    await syncP();
-    setTimeout(()=>{adminTab('products');st.style.display='none';},1500);
-  }else{st.textContent='❌ '+JSON.stringify(res);toast('خطأ في الحفظ','er');}
-}
-async function delP(id){
-  if(!confirm('حذف هذا المنتج نهائياً من Google Sheets?'))return;
-  const r=await callAPI({action:'deleteProduct',id});
-  if(r.success){toast(t('deleted'));await syncP();}
-}
-async function loadOrds(){
-  const r=await callAPI({action:'getOrders'});
-  if(r.orders){
-    orders=r.orders;
-    document.getElementById('sO').textContent=orders.length;
-    document.getElementById('sR').textContent=orders.reduce((s,o)=>s+(+o.total||0),0).toLocaleString();
-    renderOrds();
-  }
-}
-function renderOrds(){
-  const w=document.getElementById('aOw');
-  if(!orders.length){w.innerHTML='<p style="padding:1.5rem;color:var(--muted)">لا توجد طلبات بعد</p>';return;}
-  w.innerHTML=`<table><thead><tr><th>رقم الطلب</th><th>التاريخ</th><th>الاسم</th><th>الهاتف</th><th>المنتجات</th><th>المجموع</th><th>الحالة</th></tr></thead><tbody>${orders.map(o=>`<tr><td style="font-weight:800;color:var(--red)">${o.id}</td><td style="font-size:.75rem">${o.date}</td><td>${o.name}</td><td>${o.phone}</td><td style="max-width:160px;font-size:.75rem">${o.items}</td><td style="font-weight:800">${(+o.total||0).toLocaleString()} دج</td><td><select onchange="updSt('${o.id}',this.value)" style="border:1px solid var(--border);border-radius:8px;padding:4px 8px;font-family:'Tajawal',sans-serif;background:var(--card);color:var(--text);">${['جديد','مؤكد','تم التوصيل','ملغى'].map(s=>`<option${s===o.status?' selected':''}>${s}</option>`).join('')}</select></td></tr>`).join('')}</tbody></table>`;
-}
-async function updSt(id,status){await callAPI({action:'updateOrderStatus',id,status});toast('✅ تم تحديث الحالة','ok');}
-
-// ── i18n ──
-const LS=['ar','en','fr'];let curL='ar';
-const TX={
-  ar:{home:'الرئيسية',collections:'المجموعات',about:'من نحن',order:'اطلب',admin:'المسؤول',cart:'السلة',new_arrivals:'✦ وصل حديثاً 2025',hero1:'امتلك الأسلوب',hero2:'أحكم الجرأة',hero_sub:'أزياء مختلطة بروح عصرية جريئة — رجالي، نسائي، أطفال. اكتشف الكولكشن الحصري.',shop_now:'تسوق الآن →',our_story:'قصتنا',s1:'كولكشن',s2:'عميل',s3:'منتج',featured:'مميز',top:'أبرز',colls:'المجموعات',all:'الكل',men:'رجالي',women:'نسائي',kids:'أطفال',loading:'جاري التحميل...',all_coll:'كل المجموعات',discover:'اكتشف',style:'أسلوبك',coll_sub:'أكثر من 15 تشكيلة متنوعة',about_tag:'من نحن',about_h1:'قصة',about_sub:'شغف بالموضة، التزام بالجودة',our_story2:'قصتنا',ab1:'بدأت رحلتنا من شغف حقيقي — الإيمان بأن كل شخص يستحق أن يرتدي ما يجعله يشعر بالثقة والجرأة.',ab2:'نقدم تشكيلة مختارة بعناية من الملابس المختلطة للرجال، النساء، والأطفال.',ab3:'كل قطعة نختارها تحكي قصة — قصة أسلوب حياة.',v1:'جودة مضمونة',v1d:'نختار كل قطعة بمعايير صارمة',v2:'أسعار عادلة',v2d:'أفضل سعر دون تنازل',v3:'توصيل سريع',v3d:'نصلك في أسرع وقت',v4:'خدمة واتساب',v4d:'متاحون لك دائماً',order_title:'اطلب الآن',order_sub:'أكمل بياناتك — الطلب يصلك عبر واتساب',your_cart:'🛒 سلتك',f_name:'الاسم *',f_phone:'الهاتف *',f_addr:'العنوان *',f_prod:'المنتج',f_size:'المقاس',f_notes:'ملاحظات',sel_prod:'-- اختر --',send_wa:'إرسال عبر واتساب',admin_title:'لوحة التحكم',admin_sub:'أدخل كود الدخول',wrong_code:'❌ كود خاطئ',enter:'دخول',dashboard:'لوحة التحكم',add_prod:'+ منتج جديد',refresh:'🔄 تحديث',logout:'خروج',total_prods:'إجمالي المنتجات',total_ords:'إجمالي الطلبات',total_rev:'المبيعات (دج)',products:'المنتجات',orders_tab:'الطلبات',add_tab:'إضافة / تعديل',add_prod_title:'إضافة منتج جديد',f_cat:'الفئة',f_price:'السعر (دج) *',f_oldp:'السعر القديم',f_qty:'الكمية *',f_badge:'الشارة',f_img:'رابط الصورة *',f_desc:'الوصف (عربي)',f_sizes:'المقاسات (بفاصلة)',save:'حفظ المنتج',cancel:'إلغاء',cart_title:'🛒 السلة',empty_cart:'السلة فارغة',total:'المجموع',order_now:'📱 اطلب الآن',pick_size:'اختر المقاس:',add_cart:'إضافة للسلة 🛒',ft_desc:'متجرك للأزياء المختلطة — رجالي، نسائي، أطفال.',ft_links:'روابط',ft_contact:'تواصل',rights:'© 2025 LUXE FASHION — جميع الحقوق محفوظة',added:'✅ أُضيف للسلة!',order_sent:'✅ جاري فتح واتساب...',saved:'✅ تم الحفظ في Google Sheets!',deleted:'🗑 تم الحذف',fill_fields:'⚠️ أكمل الحقول المطلوبة'},
-  en:{home:'Home',collections:'Collections',about:'About',order:'Order',admin:'Admin',cart:'Cart',new_arrivals:'✦ New Arrivals 2025',hero1:'Own the Style',hero2:'Keep the Vibe',hero_sub:'Bold mixed fashion — men, women, kids. Discover the exclusive collection.',shop_now:'Shop Now →',our_story:'Our Story',s1:'Collections',s2:'Customers',s3:'Products',featured:'FEATURED',top:'Top',colls:'Collections',all:'All',men:"Men's",women:"Women's",kids:"Kids'",loading:'Loading...',all_coll:'All Collections',discover:'Discover',style:'Your Style',coll_sub:'15+ diverse collections',about_tag:'About',about_h1:'Story of',about_sub:'Passion for fashion, commitment to quality',our_story2:'Our Story',ab1:"Our journey started from a genuine passion — the belief that everyone deserves to wear what makes them feel confident and bold.",ab2:"We offer a carefully curated range of mixed clothing for men, women, and children.",ab3:"Every piece we choose tells a story — a lifestyle story.",v1:'High Quality',v1d:'Every piece selected with strict standards',v2:'Fair Prices',v2d:'Best price, no compromise',v3:'Fast Delivery',v3d:'We deliver as quickly as possible',v4:'WhatsApp Service',v4d:'Always available for you',order_title:'Order Now',order_sub:'Fill in your details — order sent via WhatsApp',your_cart:'🛒 Your Cart',f_name:'Full Name *',f_phone:'Phone *',f_addr:'Address *',f_prod:'Product',f_size:'Size',f_notes:'Notes',sel_prod:'-- Select --',send_wa:'Send via WhatsApp',admin_title:'Admin Panel',admin_sub:'Enter access code',wrong_code:'❌ Wrong code',enter:'Enter',dashboard:'Dashboard',add_prod:'+ New Product',refresh:'🔄 Refresh',logout:'Logout',total_prods:'Total Products',total_ords:'Total Orders',total_rev:'Revenue (DZD)',products:'Products',orders_tab:'Orders',add_tab:'Add / Edit',add_prod_title:'Add New Product',f_cat:'Category',f_price:'Price (DZD) *',f_oldp:'Old Price',f_qty:'Quantity *',f_badge:'Badge',f_img:'Image URL *',f_desc:'Description (AR)',f_sizes:'Sizes (comma separated)',save:'Save Product',cancel:'Cancel',cart_title:'🛒 Cart',empty_cart:'Your cart is empty',total:'Total',order_now:'📱 Order Now',pick_size:'Select size:',add_cart:'Add to Cart 🛒',ft_desc:'Your #1 store for mixed fashion.',ft_links:'Links',ft_contact:'Contact',rights:'© 2025 LUXE FASHION — All Rights Reserved',added:'✅ Added to cart!',order_sent:'✅ Opening WhatsApp...',saved:'✅ Saved to Google Sheets!',deleted:'🗑 Deleted',fill_fields:'⚠️ Please fill required fields'},
-  fr:{home:'Accueil',collections:'Collections',about:'À Propos',order:'Commander',admin:'Admin',cart:'Panier',new_arrivals:'✦ Nouvelles Arrivées 2025',hero1:'Possède le Style',hero2:'Garde le Vibe',hero_sub:'Mode mixte audacieuse — hommes, femmes, enfants. Découvrez la collection exclusive.',shop_now:'Acheter →',our_story:'Notre Histoire',s1:'Collections',s2:'Clients',s3:'Produits',featured:'VEDETTE',top:'Top',colls:'Collections',all:'Tout',men:'Hommes',women:'Femmes',kids:'Enfants',loading:'Chargement...',all_coll:'Toutes Collections',discover:'Découvre',style:'ton Style',coll_sub:'Plus de 15 collections',about_tag:'À Propos',about_h1:'Histoire de',about_sub:'Passion pour la mode, engagement qualité',our_story2:'Notre Histoire',ab1:"Notre voyage a commencé par une passion authentique — la croyance que chacun mérite de porter ce qui le rend confiant.",ab2:"Nous proposons une gamme soigneusement sélectionnée de vêtements mixtes pour hommes, femmes et enfants.",ab3:"Chaque pièce que nous choisissons raconte une histoire — une histoire de style de vie.",v1:'Haute Qualité',v1d:'Chaque pièce sélectionnée avec soin',v2:'Prix Justes',v2d:'Meilleur prix sans compromis',v3:'Livraison Rapide',v3d:'Nous livrons le plus vite possible',v4:'Service WhatsApp',v4d:'Toujours disponibles pour vous',order_title:'Commander',order_sub:'Remplissez vos informations — commande via WhatsApp',your_cart:'🛒 Votre Panier',f_name:'Nom complet *',f_phone:'Téléphone *',f_addr:'Adresse *',f_prod:'Produit',f_size:'Taille',f_notes:'Notes',sel_prod:'-- Sélectionner --',send_wa:'Envoyer via WhatsApp',admin_title:'Panneau Admin',admin_sub:"Entrez le code d'accès",wrong_code:'❌ Code incorrect',enter:'Entrer',dashboard:'Tableau de Bord',add_prod:'+ Nouveau Produit',refresh:'🔄 Actualiser',logout:'Déconnexion',total_prods:'Total Produits',total_ords:'Total Commandes',total_rev:'Revenus (DZD)',products:'Produits',orders_tab:'Commandes',add_tab:'Ajouter / Modifier',add_prod_title:'Ajouter Nouveau Produit',f_cat:'Catégorie',f_price:'Prix (DZD) *',f_oldp:'Ancien Prix',f_qty:'Quantité *',f_badge:'Badge',f_img:"URL Image *",f_desc:'Description (AR)',f_sizes:'Tailles (séparées par virgule)',save:'Sauvegarder',cancel:'Annuler',cart_title:'🛒 Panier',empty_cart:'Votre panier est vide',total:'Total',order_now:'📱 Commander',pick_size:'Sélectionner taille:',add_cart:'Ajouter au Panier 🛒',ft_desc:'Votre boutique #1 pour la mode mixte.',ft_links:'Liens',ft_contact:'Contact',rights:'© 2025 LUXE FASHION — Tous droits réservés',added:'✅ Ajouté!',order_sent:'✅ Ouverture WhatsApp...',saved:'✅ Sauvegardé!',deleted:'🗑 Supprimé',fill_fields:'⚠️ Remplissez les champs requis'}
-};
-function t(k){return TX[curL][k]||TX.ar[k]||k;}
-function applyLang(){
-  document.querySelectorAll('[data-k]').forEach(el=>{
-    const k=el.getAttribute('data-k');
-    if(el.tagName==='INPUT'||el.tagName==='TEXTAREA')el.placeholder=t(k);
-    else el.textContent=t(k);
-  });
-  document.documentElement.lang=curL;
-  document.documentElement.dir=curL==='ar'?'rtl':'ltr';
-  document.getElementById('lbtn').textContent=curL.toUpperCase();
-  fillSel(); renderAll();
-}
-function cycleLang(){curL=LS[(LS.indexOf(curL)+1)%LS.length];applyLang();}
-
-// ── THEME ──
-let dark=false;
-function toggleTheme(){dark=!dark;document.documentElement.setAttribute('data-theme',dark?'dark':'');document.getElementById('tbtn').textContent=dark?'☀️':'🌙';}
-
-// ── NAV ──
-function go(pg){
-  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
-  document.getElementById('page-'+pg).classList.add('active');
-  window.scrollTo({top:0,behavior:'smooth'});
-  document.getElementById('nl').classList.remove('on');
-  if(pg==='order'){updOC();fillSel();}
-  if(pg==='coll')renderG('all','cG');
-  if(pg==='admin'&&!loggedIn){document.getElementById('aLg').style.display='flex';document.getElementById('aP').style.display='none';}
-}
-
-// ── TOAST ──
-function toast(msg,type=''){const el=document.getElementById('toast');el.textContent=msg;el.className='toast'+(type?' '+type:'');el.classList.add('show');setTimeout(()=>el.classList.remove('show'),3000);}
-
-// ── INIT ──
-loadProds();applyLang();
-</script>
+<script src="script.js"></script>
 </body>
 </html>
